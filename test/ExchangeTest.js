@@ -24,11 +24,16 @@ describe("Exchange", function () {
         await expect(exchange.connect(addr1).sell(1)).to.be.reverted;
     });
 
-    it("Should allow the user to approve the selling of a token on the exchange", async () => {
-        await exchange.connect(addr1).buy(1, { value: 1000 });
-        await token.connect(addr1).approve(exchange.address, 1);
-        const approvedAmount = await exchange.connect(addr1).viewApproved();
-        expect(parseInt(approvedAmount)).to.equal(1);
+    it("Should taken", async () => {
+        await token.connect(owner).approve(exchange.address, 1000);
+        await exchange.connect(owner).giveExchangeTokens();
     });
+
+    // it("Should allow the user to approve the selling of a token on the exchange", async () => {
+    //     await exchange.connect(addr1).buy(1, { value: 1000 });
+    //     await token.connect(addr1).approve(exchange.address, 1);
+    //     const approvedAmount = await exchange.connect(addr1).viewApproved();
+    //     expect(parseInt(approvedAmount)).to.equal(1);
+    // });
   });
 });

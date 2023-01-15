@@ -14,6 +14,12 @@ contract Exchange {
         owner = msg.sender;
     }
 
+    function giveExchangeTokens() external {
+        require(msg.sender == owner);
+        uint allowance = token.allowance(msg.sender, address(this));
+        token.transferFrom(msg.sender, address(this), allowance);
+    }
+
     function sell(uint amount) external payable {
         uint allowance = token.allowance(msg.sender, address(this));
         require(token.balanceOf(msg.sender) >= amount, "You don't have that many tokens to sell.");
