@@ -1,0 +1,17 @@
+{
+  "network": "localhost",
+  "contract": {
+    "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+    "signerAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "abi": [
+      "constructor(address _token, uint256 _price)",
+      "function buy(uint256 amount) payable",
+      "function giveExchangeTokens()",
+      "function sell(uint256 amount) payable",
+      "function token() view returns (address)",
+      "function viewApproved() view returns (uint256)",
+      "function viewBalance() view returns (uint256)",
+      "function viewPrice(uint256 amount) view returns (uint256)"
+    ]
+  }
+}

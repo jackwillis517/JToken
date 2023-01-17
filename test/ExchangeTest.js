@@ -60,5 +60,14 @@ describe("Exchange", function () {
       await expect(exchange.connect(addr1).buy(1, { value: 100 })).to.be
         .reverted;
     });
+
+    it("Should reject if the user attempts to buy more Jtoken then the exchange has", async () => {
+      await expect(exchange.connect(addr1).buy(100001, { value: 100001000 })).to
+        .be.reverted;
+    });
+
+    it("Should allow the user to buy Jtoken for the proper amount of eth", async () => {
+      await exchange.connect(addr1).buy(1, { value: 1000 });
+    });
   });
 });

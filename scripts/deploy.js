@@ -1,30 +1,35 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
 const hre = require("hardhat");
+// var fs = require("fs");
+const fs = require("fs/promises");
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+  const Token = await hre.ethers.getContractFactory("JToken");
+  const token = await Token.deploy(100000);
 
-  const lockedAmount = hre.ethers.utils.parseEther("1");
+  const Exchange = await hre.ethers.getContractFactory("Exchange");
+  const exchange = await Exchange.deploy(token.address, 100000000000000);
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  await token.deployed();
+  await exchange.deployed();
 
-  await lock.deployed();
-
-  console.log(
-    `Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
-  );
+  await writeContractDeploymentInfo(token, "tokenDeploymentInfo.json");
+  await writeContractDeploymentInfo(exchange, "exchangeDeploymentInfo.json");
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
+async function writeContractDeploymentInfo(contract, filename = "") {
+  const data = {
+    network: hre.network.name,
+    contract: {
+      address: contract.address,
+      signerAddress: contract.signer.address,
+      abi: contract.interface.format(),
+    },
+  };
+
+  const info = JSON.stringify(data, null, 2);
+  await fs.writeFile(filename, info, { encoding: "utf-8" });
+}
+
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
