@@ -1,5 +1,4 @@
 const hre = require("hardhat");
-// var fs = require("fs");
 const fs = require("fs/promises");
 
 async function main() {
