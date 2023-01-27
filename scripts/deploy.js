@@ -13,6 +13,9 @@ async function main() {
 
   await writeContractDeploymentInfo(token, "tokenDeploymentInfo.json");
   await writeContractDeploymentInfo(exchange, "exchangeDeploymentInfo.json");
+
+  await token.approve(exchange.address, 100000);
+  await exchange.giveExchangeTokens();
 }
 
 async function writeContractDeploymentInfo(contract, filename = "") {
