@@ -1,8 +1,8 @@
 {
-  "network": "localhost",
+  "network": "goerli",
   "contract": {
-    "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-    "signerAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "address": "0x9f39A8f4471d1947b35f1d35b9438680b33F611b",
+    "signerAddress": "0x574b7eA5FB92B58dfD058e696B0f69B19Ce89418",
     "abi": [
       "constructor(address _token, uint256 _price)",
       "function buy(uint256 amount) payable",
